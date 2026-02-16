@@ -1,6 +1,6 @@
 {
   "phases": {
-    "extensions": {
+    "prepare": {
       "cmds": [
         "install-php-extensions gd zip"
       ]

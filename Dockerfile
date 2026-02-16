@@ -1,4 +1,5 @@
-FROM dunglas/frankenphp:php8.3-bookworm
+FROM dunglas/frankenphp:1-php8.3-bookworm
+
 
 # Install dependencies sistem
 RUN apt-get update && apt-get install -y \

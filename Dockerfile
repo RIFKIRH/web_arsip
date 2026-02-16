@@ -1,6 +1,11 @@
 FROM dunglas/frankenphp:php8.2-bookworm
 
-# Install PHP extensions yang dibutuhkan
+# Install dependencies sistem
+RUN apt-get update && apt-get install -y \
+    git unzip zip curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
 RUN install-php-extensions \
     gd \
     zip \
@@ -11,17 +16,16 @@ RUN install-php-extensions \
     bcmath \
     intl
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install Composer secara manual (lebih aman)
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
 
 WORKDIR /app
 
 COPY . .
 
-# Install dependency Laravel
 RUN composer install --optimize-autoloader --no-interaction
 
-# Cache config biar production ready
 RUN php artisan config:cache \
  && php artisan route:cache \
  && php artisan view:cache

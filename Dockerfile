@@ -1,11 +1,9 @@
 FROM dunglas/frankenphp:1-php8.3-bookworm
 
-# Install dependencies sistem
 RUN apt-get update && apt-get install -y \
     git unzip zip curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
 RUN install-php-extensions \
     gd \
     zip \
@@ -16,7 +14,6 @@ RUN install-php-extensions \
     bcmath \
     intl
 
-# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
@@ -26,14 +23,11 @@ COPY . .
 
 RUN composer install --optimize-autoloader --no-interaction
 
-# Jangan cache config di build time!
-# Hapus ini:
-# php artisan config:cache
-# php artisan route:cache
-# php artisan view:cache
+# Jangan cache config saat build!
 
 EXPOSE 8080
 
 CMD php artisan config:clear && \
     php artisan cache:clear && \
-    frankenphp run --config /etc/frankenphp/Caddyfile
+    php artisan migrate --force && \
+    frankenphp php-server --port=$PORT --host=0.0.0.0 public/index.php

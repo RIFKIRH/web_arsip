@@ -18,6 +18,10 @@ RUN composer install --no-interaction --optimize-autoloader
 
 EXPOSE 8080
 
-CMD php artisan config:clear && \
-    php artisan cache:clear && \
+CMD php artisan optimize:clear && \
+    php artisan config:cache && \
+    php artisan migrate --force && \
     php artisan serve --host=0.0.0.0 --port=$PORT
+
+
+    

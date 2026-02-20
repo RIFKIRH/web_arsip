@@ -19,8 +19,7 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# Install & Build Frontend
-RUN npm install && npm run build
+
 
 RUN php artisan config:clear && \
     php artisan config:cache && \

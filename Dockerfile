@@ -15,12 +15,11 @@ WORKDIR /app
 COPY . .
 
 RUN composer install --no-interaction --optimize-autoloader
+# Build frontend
+RUN npm install && npm run build
 
 EXPOSE 8080
 
-CMD 
-    npm install
-    npm run build
-    php artisan config:clear && \
+CMD php artisan config:clear && \
     php artisan migrate --seed --force && \
     php artisan serve --host=0.0.0.0 --port=$PORT

@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        User::updateOrCreate([
             "nip" => "admin123",
             "jabatan" => "KEPALA SUB BAGIAN UMUM",
             "unit_id" => "3",
@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             "password" => bcrypt("1")
         ]);
 
-        User::create([
+        User::updateOrCreate([
             "nip" => "ux123",
             "jabatan" => "Jabatan ABC",
             "unit_id" => "5",
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             "ttd" => "uploads/user/ttd_dummy.png",
             "password" => bcrypt("1")
         ]);
-        User::create([
+        User::updateOrCreate([
             "nip" => "dp123",
             "jabatan" => "Jabatan XYZ",
             "unit_id" => "6",
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             "password" => bcrypt("1")
         ]);
 
-        User::create([
+        User::updateOrCreate([
             "nip" => "kepaladinas123",
             "jabatan" => "Kepala Dinas",
             "unit_id" => "1",
@@ -73,7 +73,7 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            User::create([
+            User::updateOrCreate([
                 "nip" => $user[0],
                 "jabatan" => $user[1],
                 "unit_id" => $user[2],

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -12,45 +13,57 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::updateOrCreate([
-            "nip" => "admin123",
-            "jabatan" => "KEPALA SUB BAGIAN UMUM",
-            "unit_id" => "3",
-            "name" => "admin",
-            "role" => "admin",
-            "ttd" => "uploads/user/ttd_dummy.png",
-            "password" => bcrypt("1")
-        ]);
+        // Admin
+        User::updateOrCreate(
+            ['nip' => 'admin123'],
+            [
+                "jabatan" => "KEPALA SUB BAGIAN UMUM",
+                "unit_id" => 3,
+                "name" => "admin",
+                "role" => "admin",
+                "ttd" => "uploads/user/ttd_dummy.png",
+                "password" => Hash::make("1"),
+            ]
+        );
 
-        User::updateOrCreate([
-            "nip" => "ux123",
-            "jabatan" => "Jabatan ABC",
-            "unit_id" => "5",
-            "name" => "Qosim",
-            "role" => "user",
-            "ttd" => "uploads/user/ttd_dummy.png",
-            "password" => bcrypt("1")
-        ]);
-        User::updateOrCreate([
-            "nip" => "dp123",
-            "jabatan" => "Jabatan XYZ",
-            "unit_id" => "6",
-            "name" => "Dewangga",
-            "role" => "user",
-            "ttd" => "uploads/user/ttd_dummy.png",
-            "password" => bcrypt("1")
-        ]);
+        // User Manual
+        User::updateOrCreate(
+            ['nip' => 'ux123'],
+            [
+                "jabatan" => "Jabatan ABC",
+                "unit_id" => 5,
+                "name" => "Qosim",
+                "role" => "user",
+                "ttd" => "uploads/user/ttd_dummy.png",
+                "password" => Hash::make("1"),
+            ]
+        );
 
-        User::updateOrCreate([
-            "nip" => "kepaladinas123",
-            "jabatan" => "Kepala Dinas",
-            "unit_id" => "1",
-            "name" => "Burhanudin",
-            "role" => "kepala_dinas",
-            "ttd" => "uploads/user/ttd_dummy.png",
-            "password" => bcrypt("1")
-        ]);
+        User::updateOrCreate(
+            ['nip' => 'dp123'],
+            [
+                "jabatan" => "Jabatan XYZ",
+                "unit_id" => 6,
+                "name" => "Dewangga",
+                "role" => "user",
+                "ttd" => "uploads/user/ttd_dummy.png",
+                "password" => Hash::make("1"),
+            ]
+        );
 
+        User::updateOrCreate(
+            ['nip' => 'kepaladinas123'],
+            [
+                "jabatan" => "Kepala Dinas",
+                "unit_id" => 1,
+                "name" => "Burhanudin",
+                "role" => "kepala_dinas",
+                "ttd" => "uploads/user/ttd_dummy.png",
+                "password" => Hash::make("1"),
+            ]
+        );
+
+        // Bulk Users
         $users = [
             ["1976543210", "Sekretaris", 1, "Siti Aminah"],
             ["1965432109", "Kepala Sub Bagian Keuangan, Perlengkapan, dan Pengelolaan Barang Milik Daerah", 2, "Joko Santoso"],
@@ -73,15 +86,17 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            User::updateOrCreate([
-                "nip" => $user[0],
-                "jabatan" => $user[1],
-                "unit_id" => $user[2],
-                "name" => $user[3],
-                "role" => "user",
-                "ttd" => "uploads/user/ttd_dummy.png",
-                "password" => bcrypt("123456"),
-            ]);
+            User::updateOrCreate(
+                ['nip' => $user[0]],
+                [
+                    "jabatan" => $user[1],
+                    "unit_id" => $user[2],
+                    "name" => $user[3],
+                    "role" => "user",
+                    "ttd" => "uploads/user/ttd_dummy.png",
+                    "password" => Hash::make("123456"),
+                ]
+            );
         }
     }
 }

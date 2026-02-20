@@ -2,24 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\Klasifikasi;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Klasifikasi;
 
 class KlasifikasiSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Klasifikasi::create([
-            "kode_klasifikasi" => "A1234",
-            "nama" => "Surat ABCD"
-        ]);
-        Klasifikasi::create([
-            "kode_klasifikasi" => "B1234",
-            "nama" => "Surat PX"
-        ]);
+        $data = [
+            ['kode_klasifikasi' => 'A1234', 'nama' => 'Surat ABCD'],
+            ['kode_klasifikasi' => 'B5678', 'nama' => 'Surat EFGH'],
+            ['kode_klasifikasi' => 'C9101', 'nama' => 'Surat IJKL'],
+        ];
+
+        foreach ($data as $item) {
+            Klasifikasi::updateOrCreate(
+                ['kode_klasifikasi' => $item['kode_klasifikasi']],
+                ['nama' => $item['nama']]
+            );
+        }
     }
 }

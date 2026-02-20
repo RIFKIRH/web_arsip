@@ -1,6 +1,6 @@
 FROM php:8.3-cli
 
-# Install system dependencies + Node.js
+# Install system dependencies + Node
 RUN apt-get update && apt-get install -y \
     git unzip zip curl libzip-dev libpng-dev libjpeg-dev libfreetype6-dev \
     nodejs npm \
@@ -13,19 +13,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copy composer files dulu (biar cache optimal)
-COPY composer.json composer.lock ./
-RUN composer install --no-interaction --optimize-autoloader --no-dev
-
-# Copy package.json dulu (biar cache optimal)
-COPY package.json package-lock.json* ./
-RUN npm install
-
-# Copy seluruh project
+# Copy seluruh project dulu (artisan harus ada sebelum composer install)
 COPY . .
 
-# Build frontend
-RUN npm run build
+# Install PHP dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Install & Build Frontend
+RUN npm install && npm run build
 
 EXPOSE 8080
 

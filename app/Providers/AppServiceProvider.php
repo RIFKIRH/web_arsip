@@ -4,26 +4,22 @@ namespace App\Providers;
 
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL; // ← INI WAJIB
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // Set default timezone ke Indonesia
-        date_default_timezone_set('Asia/Jakarta');
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
 
-        // Optional: paksa Carbon pakai locale Indonesia
+        date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id');
     }
 }
